@@ -1,0 +1,23 @@
+extends layout
+
+block content
+
+  head 
+
+    title Login
+    link(rel="stylesheet" href="/login.css")
+    script(src="/login.js" defer) 
+
+  body  
+
+
+    form(action="/auth/login" method="post").login.col.col-11.col-lg-6.col-sm-10
+      input(type="text" name="correo" placeholder="Username" required)
+      input(type="password" name="clave" placeholder="Password" required)
+      button(type="submit")  Login
+
+
+
+
+
+

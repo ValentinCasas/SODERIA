@@ -1,5 +1,138 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  head 
+
+    title Inicio
+
+    link(rel='stylesheet' href='/index.css')
+    script(src="/index.js" defer)
+
+    link(rel='stylesheet' href='/carrito-compras.css')
+    script(src="/carrito-compras.js" defer)
+
+
+  body  
+
+
+    div.inicio
+
+
+    main
+      div
+        span catalogo
+        h1 Torres aquaman
+        hr
+        p Disfruta de un agua sumamente refrescante y sin cloro!
+        a(href="#") ver productos
+
+      div.swiper
+        div.swiper-wrapper
+          each foto, index in [1, 2, 3, 4, 5]
+
+            if index == 0
+              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/bidon.png') no-repeat 50% 50% / contain;")
+                div
+                  h2 Producto
+                  p descripcion del producto
+                  a(href="#" target="_blank") información
+
+            if index == 1
+              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/coca.png') no-repeat 50% 50% / contain;")
+                div
+                  h2 Producto
+                  p descripcion del producto
+                  a(href="#" target="_blank") información     
+
+            if index == 2
+              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/dispenser.png') no-repeat 50% 50% / contain;")
+                div
+                  h2 Producto
+                  p descripcion del producto
+                  a(href="#" target="_blank") información
+
+            if index == 3
+              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/pepsi.png') no-repeat 50% 50% / contain;")
+                div
+                  h2 Producto
+                  p descripcion del producto
+                  a(href="#" target="_blank") información  
+
+            if index == 4
+              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/terma.png') no-repeat 50% 50% / contain;")
+                div
+                  h2 Producto
+                  p descripcion del producto
+                  a(href="#" target="_blank") información                
+
+        // Add Pagination
+        div.swiper-pagination
+
+
+    section#foro
+      .titulo.mb-5.d-flex.justify-content-center
+        h2 PREGUNTAS FRECUENTES
+      .container.contain-preguntas
+        each pregunta in foro
+          .pregunta
+            details
+              summary(class="bg-white p-2 rounded")= pregunta.pregunta
+              p(class="respuesta") #{pregunta.Usuario.nombreCompleto}: #{pregunta.respuesta}
+
+
+    section.carrito.p-lg-5.p-2
+      .titulo.mb-5.d-flex.justify-content-center
+        h2 HACE TU PEDIDO
+      .row
+        each item, index in [1,2,3,4,5,6,7,8,9] 
+          .col-lg-3.col-md-4.col-sm-6.col-12.d-flex.justify-content-center
+            .card.mb-2(id=`producto-${index}`)
+              img.card-img-top(src="/dispenser.png" alt="Imagen del producto")
+              .card-body
+                h5.card-title.title Título #{index}
+                p.card-text.descripcion Descripción #{index}
+                p.card-text.precio $#{index}
+                button.btn.btn-primary.agregar(data-producto-id=index onclick="agregarAlCarrito(this)") Agregar al carrito
+
+
+    //nav
+    div.nav.d-flex.justify-content-between.align-items-center.p-2
+      .contain-btn-empleado
+        a(href="auth/view/login").cta
+          span Soy empleado
+          svg(viewBox="0 0 13 10" height="10px" width="15px")
+            path(d="M1,5 L11,5")
+            polyline(points="8 1 12 5 8 9")
+
+      a.cart-icon(data-toggle="modal" data-target="#carritoModal")
+        span#totalItems 0
+
+      div.modal#carritoModal
+        form.modal-dialog(action="/comprar" method="POST")
+          .modal-content
+            .modal-header
+              h5.modal-title Mi carrito
+              span.total-suma
+            .modal-body
+              ul.cart
+            .modal-footer
+              input.form-control(type="text" name="nombre" placeholder="Nombre del comprador" required)
+              input.form-control(type="text" name="contacto" placeholder="Teléfono/Correo electrónico" required)
+              input.form-control(type="text" name="metodoPago" placeholder="Método de pago" required)
+              button.btn.btn-primary(ids="generarObjetoBtn" type="submit") Hacer pedido
+              button.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar
+
+
+
+    section.algo
+
+
+
+
+
+
+
+
+
+

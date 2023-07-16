@@ -1,0 +1,45 @@
+extends layout
+
+block content
+
+  head 
+
+    title Home
+
+    link(rel='stylesheet' href='/home.css')
+    script(src="/home.js" defer)
+
+  body  
+
+    nav.navbar.navbar-expand-custom.navbar-mainbg
+      a.navbar-brand.navbar-logo.text-white(href='#') SODERIA
+      button.navbar-toggler.m-2(type='button' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      div.collapse.navbar-collapse#navbarSupportedContent.justify-content-center
+        ul.navbar-nav.ml-auto
+          div.hori-selector
+            div.left
+            div.right
+          li.nav-item.active
+
+            if locals.role == "administrador"
+              a.nav-link(href='javascript:void(0);')
+                i.ion.ion-home
+                | Inicio
+          li.nav-item
+            a.nav-link(href='javascript:void(0);')
+              i.ion.ion-document-text
+              | Blog
+          li.nav-item
+            a.nav-link(href='javascript:void(0);')
+              i.ion.ion-chatbox
+              | Feedback
+          li.nav-item
+            a.nav-link(href='javascript:void(0);')
+              i.ion.ion-cube
+              | Stock
+          li.nav-item
+            a.nav-link(href='javascript:void(0)' onclick=`confirmarLogout()`) 
+              i.ion.ion-person
+              | Salir
+
