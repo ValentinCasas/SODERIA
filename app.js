@@ -14,6 +14,8 @@ var isAutenticatedBD = require("./routes/auth").isAutenticatedBD;
 const authRouter = require('./routes/auth').router;
 const indexRouter = require('./routes/index');
 const homeRouter = require('./routes/home');
+const productoRouter = require('./routes/producto');
+const foroRouter = require('./routes/foro');
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'fonts')));
 app.use(express.static(path.join(__dirname, 'public/stylesheets')));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
 app.use(express.static(path.join(__dirname, 'public/images')));
+app.use(express.static(path.join(__dirname, 'public/imagen-producto')));
+app.use(express.static(path.join(__dirname, 'public/imagenes-por-defecto')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,6 +55,8 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/home', homeRouter);
+app.use('/productos', productoRouter);
+app.use('/foro', foroRouter);
 
 
 

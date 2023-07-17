@@ -7,39 +7,57 @@ block content
     title Home
 
     link(rel='stylesheet' href='/home.css')
+    link(rel='stylesheet' href='/nav.css')
     script(src="/home.js" defer)
+    script(src="/redireccion-menu.js" defer)
 
   body  
 
-    nav.navbar.navbar-expand-custom.navbar-mainbg
-      a.navbar-brand.navbar-logo.text-white(href='#') SODERIA
-      button.navbar-toggler.m-2(type='button' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      div.collapse.navbar-collapse#navbarSupportedContent.justify-content-center
-        ul.navbar-nav.ml-auto
-          div.hori-selector
-            div.left
-            div.right
-          li.nav-item.active
 
-            if locals.role == "administrador"
-              a.nav-link(href='javascript:void(0);')
-                i.ion.ion-home
-                | Inicio
-          li.nav-item
-            a.nav-link(href='javascript:void(0);')
-              i.ion.ion-document-text
-              | Blog
-          li.nav-item
-            a.nav-link(href='javascript:void(0);')
-              i.ion.ion-chatbox
-              | Feedback
-          li.nav-item
-            a.nav-link(href='javascript:void(0);')
-              i.ion.ion-cube
-              | Stock
-          li.nav-item
-            a.nav-link(href='javascript:void(0)' onclick=`confirmarLogout()`) 
-              i.ion.ion-person
-              | Salir
+
+
+
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+      .container-fluid
+        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        a.navbar-brand(href="/") SODERIA
+        #navbar.collapse.navbar-collapse
+          ul.navbar-nav.ms-auto.p-2
+            li.nav-item.mx-3
+              a.nav-link.active(href="/home") Inicio
+
+            if locals.isLoggedIn 
+              li.nav-item.mx-3
+                a.nav-link(href="") algo 
+              div.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                  | Productos
+                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+
+                  li
+                    a.dropdown-item(href="javascript:void(0)")#productos Crear   
+                  li
+                    a.dropdown-item(href="/productos/view-agregar") actualizar  
+                  li
+                    a.dropdown-item(href="") algo   
+
+              div.nav-item.dropdown.mx-3
+                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                  | Aceptar
+                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+                  li
+                    a.dropdown-item(href="/foro/view-preguntas") preguntas foro
+
+
+            li.nav-item.dropdown.mx-3
+              a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Sesión
+              ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
+                if !locals.isLoggedIn 
+                li
+                  hr.dropdown-divider
+                if locals.isLoggedIn 
+                  li
+                    a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
+    
 

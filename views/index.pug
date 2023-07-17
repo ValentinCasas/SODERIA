@@ -10,6 +10,7 @@ block content
     script(src="/index.js" defer)
 
     link(rel='stylesheet' href='/carrito-compras.css')
+    link(rel='stylesheet' href='/whatsapp.css')
     script(src="/carrito-compras.js" defer)
 
 
@@ -29,42 +30,12 @@ block content
 
       div.swiper
         div.swiper-wrapper
-          each foto, index in [1, 2, 3, 4, 5]
-
-            if index == 0
-              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/bidon.png') no-repeat 50% 50% / contain;")
-                div
-                  h2 Producto
-                  p descripcion del producto
-                  a(href="#" target="_blank") información
-
-            if index == 1
-              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/coca.png') no-repeat 50% 50% / contain;")
-                div
-                  h2 Producto
-                  p descripcion del producto
-                  a(href="#" target="_blank") información     
-
-            if index == 2
-              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/dispenser.png') no-repeat 50% 50% / contain;")
-                div
-                  h2 Producto
-                  p descripcion del producto
-                  a(href="#" target="_blank") información
-
-            if index == 3
-              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/pepsi.png') no-repeat 50% 50% / contain;")
-                div
-                  h2 Producto
-                  p descripcion del producto
-                  a(href="#" target="_blank") información  
-
-            if index == 4
-              div(class=`swiper-slide swiper-slide--${index + 1}` style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);background: url('/terma.png') no-repeat 50% 50% / contain;")
-                div
-                  h2 Producto
-                  p descripcion del producto
-                  a(href="#" target="_blank") información                
+          each producto in Productos
+            div(class=`swiper-slide swiper-slide--${producto.id}`, style=`box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); background: url('${producto.imagenUrl}') no-repeat 50% 50% / contain;`)
+              div
+                h2= producto.nombre
+                p= producto.descripcion
+                a(href="#" target="_blank") información
 
         // Add Pagination
         div.swiper-pagination
@@ -74,26 +45,32 @@ block content
       .titulo.mb-5.d-flex.justify-content-center
         h2 PREGUNTAS FRECUENTES
       .container.contain-preguntas
-        each pregunta in foro
+        each pregunta in Foro
           .pregunta
             details
               summary(class="bg-white p-2 rounded")= pregunta.pregunta
               p(class="respuesta") #{pregunta.Usuario.nombreCompleto}: #{pregunta.respuesta}
+      form.form(action="/foro/agregar" method="post").container.form-foro.d-flex.mt-3
+        input.input-foro.form-control(type="text" name="foro" placeholder="Ingrese su duda (anonimo)", required)
+        button.btn.btn-primary.btn-foro(type="submit") Enviar
+
+
+
 
 
     section.carrito.p-lg-5.p-2
-      .titulo.mb-5.d-flex.justify-content-center
+      .titulo.mb-5.mt-5.d-flex.justify-content-center
         h2 HACE TU PEDIDO
       .row
-        each item, index in [1,2,3,4,5,6,7,8,9] 
+        each producto in Productos
           .col-lg-3.col-md-4.col-sm-6.col-12.d-flex.justify-content-center
-            .card.mb-2(id=`producto-${index}`)
-              img.card-img-top(src="/dispenser.png" alt="Imagen del producto")
+            .card.m-2(id=`producto-${producto.id}`)
+              img.card-img-top(src=`/${producto.imagenUrl}`, alt="Imagen del producto")
               .card-body
-                h5.card-title.title Título #{index}
-                p.card-text.descripcion Descripción #{index}
-                p.card-text.precio $#{index}
-                button.btn.btn-primary.agregar(data-producto-id=index onclick="agregarAlCarrito(this)") Agregar al carrito
+                h5.card-title.title #{producto.nombre}
+                p.card-text.descripcion #{producto.descripcion}
+                p.card-text.precio $#{producto.precioVenta}
+                button.btn.btn-primary.agregar(data-producto-id=producto.id onclick="agregarAlCarrito(this)") Agregar al carrito
 
 
     //nav
@@ -108,7 +85,7 @@ block content
       a.cart-icon(data-toggle="modal" data-target="#carritoModal")
         span#totalItems 0
 
-      div.modal#carritoModal
+      div.modal#carritoModal.p-2
         form.modal-dialog(action="/comprar" method="POST")
           .modal-content
             .modal-header
@@ -126,6 +103,38 @@ block content
 
 
     section.algo
+
+    a(href="whatsapp://send?phone=2665018537")
+      svg(viewBox="0 0 32 32" class="whatsapp-ico")
+        path(d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" fill-rule="evenodd")
+
+
+  script.
+    $(document).ready(function() {
+      $('form').submit(function(e) {
+        e.preventDefault(); // Evita el envío normal del formulario
+
+        var formData = new FormData(this);
+
+        $.ajax({
+          url: '/foro/agregar',
+          method: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            swal({
+              icon: 'success',
+              title: 'En espera',
+              text: 'La pregunta se encuentra en proceso de aceptación',
+              timer: 3000,
+              timerProgressBar: true
+            });
+          }
+        });
+      });
+    });
+
 
 
 

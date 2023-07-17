@@ -1,0 +1,187 @@
+extends layout
+
+block content
+
+    head 
+
+        title Home
+
+        link(rel='stylesheet' href='/preguntas-foro.css')
+        link(rel='stylesheet' href='/nav.css')
+
+        script(src="/preguntas-foro.js" defer)
+
+        script(src="/home.js" defer)
+        script(src="/redireccion-menu.js" defer)
+
+    body  
+
+
+
+
+
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+            .container-fluid
+                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                a.navbar-brand(href="/") SODERIA
+                #navbar.collapse.navbar-collapse
+                    ul.navbar-nav.ms-auto.p-2
+                        li.nav-item.mx-3
+                            a.nav-link(href="/home") Inicio
+
+                        if locals.isLoggedIn 
+                            li.nav-item.mx-3
+                                a.nav-link(href="") algo 
+                            div.nav-item.dropdown
+                                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                                    | Productos
+                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+
+                                    li
+                                        a.dropdown-item(href="javascript:void(0)")#productos Crear   
+                                    li
+                                        a.dropdown-item(href="") algo   
+                                    li
+                                        a.dropdown-item(href="") algo   
+
+                            div.nav-item.dropdown.mx-3
+                                a.nav-link.dropdown-toggle.active(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                                    | Aceptar
+                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+                                    li
+                                        a.dropdown-item(href="/foro/view-preguntas") preguntas foro
+
+
+                        li.nav-item.dropdown.mx-3
+                            a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Sesión
+                            ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
+                                if !locals.isLoggedIn 
+                                li
+                                    hr.dropdown-divider
+                                if locals.isLoggedIn 
+                                    li
+                                        a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
+
+
+        .app.mt-5
+            main.project
+
+                .d-flex
+                    .foro-verde.bg-success.m-2 
+                    p.m-2 aceptado
+                .d-flex
+                    .foro-rojo.bg-danger.m-2 
+                    p.m-2 en espera
+
+                .project-tasks
+
+                    each pregunta in ForoEnProceso
+                        .task(draggable='true')
+                            .task__tags
+
+                            p= pregunta.pregunta
+                            .task__stats
+                                span
+                                    time(datetime="2021-11-24T20:00:00")
+                                    span
+                                        i.ion-icon(name="flag")= pregunta.fecha
+                                if pregunta.aceptado == 0
+                                    span.task__owner.bg-danger
+                                else
+                                    span.task__owner.bg-success 
+                                button.btn.border.border-secondary(type="button" data-bs-toggle="modal" data-bs-target=`#modalEnProceso${pregunta.id}`) + info
+
+
+                .project-tasks
+                    each pregunta in ForoAceptado
+                        .task(draggable='true')
+                            .task__tags
+
+                            p= pregunta.pregunta
+                            .task__stats
+                                span
+                                    time(datetime="2021-11-24T20:00:00")
+                                    span
+                                        i.ion-icon(name="flag")= pregunta.fecha
+                                if pregunta.aceptado == 0
+                                    span.task__owner.bg-danger
+                                else
+                                    span.task__owner.bg-success 
+                                button.btn.border.border-secondary(type="button" data-bs-toggle="modal" data-bs-target=`#modalAceptado${pregunta.id}`) + info    
+
+            each pregunta in ForoEnProceso
+                .modal.fade(id=`modalEnProceso${pregunta.id}`, tabindex="-1", aria-labelledby=`modalLabelEnProceso${pregunta.id}`, aria-hidden="true")
+                    .modal-dialog.modal-dialog-centered
+                        .modal-content
+                            .modal-header
+                                h5.modal-title#modalLabelAceptado Aceptado
+                                button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                            .modal-body
+                                form(action="/foro/actualizar" method="post")
+                                    .form-group
+                                        label(for=`input1${pregunta.id}`) Pregunta
+                                        input.form-control(type="text", value=pregunta.pregunta, id=`input1${pregunta.id}`, name="pregunta")
+                                    .form-group
+                                        input(type="hidden" name="id", value=`${pregunta.id}`)
+                                        .form-check
+                                            input.form-check-input(type="checkbox", id=`checkbox${pregunta.id}`, name="checkbox", checked=pregunta.aceptado)
+                                            label.form-check-label(for=`checkbox${pregunta.id}`) Aceptado
+                                    .form-group
+                                        label(for=`input1${pregunta.id}`) Respuesta
+                                        input.form-control(type="text", value=pregunta.respuesta, id=`input1${pregunta.id}`, name="respuesta")
+                                    .modal-footer
+                                        button.btn.btn-primary(type="submit") Enviar 
+
+            each pregunta in ForoAceptado
+                .modal.fade(id=`modalAceptado${pregunta.id}`, tabindex="-1", aria-labelledby=`modalLabelAceptado${pregunta.id}`, aria-hidden="true")
+                    .modal-dialog.modal-dialog-centered
+                        .modal-content
+                            .modal-header
+                                h5.modal-title#modalLabelAceptado Aceptado
+                                button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                            .modal-body
+                                form(action="/foro/actualizar" method="post")
+                                    .form-group
+                                        label(for=`input1${pregunta.id}`) Pregunta
+                                        input.form-control(type="text", value=pregunta.pregunta, id=`input1${pregunta.id}`, name="pregunta")
+                                    .form-group
+                                        input(type="hidden" name="id", value=`${pregunta.id}`)
+                                        .form-check
+                                            input.form-check-input(type="checkbox", id=`checkbox${pregunta.id}`, name="checkbox", checked=pregunta.aceptado)
+                                            label.form-check-label(for=`checkbox${pregunta.id}`) Aceptado
+                                    .form-group
+                                        label(for=`input1${pregunta.id}`) Respuesta
+                                        input.form-control(type="text", value=pregunta.respuesta, id=`input1${pregunta.id}`, name="respuesta")
+                                    .modal-footer
+                                        button.btn.btn-primary(type="submit") Enviar  
+
+
+
+
+
+    script.
+        $(document).ready(function() {
+        $('form').submit(function(e) {
+            e.preventDefault(); // Evita el envío normal del formulario
+
+            var formData = new FormData(this);
+
+            $.ajax({
+            url: '/foro/actualizar',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                swal({
+                icon: 'success',
+                title: 'Exito',
+                text: 'Pregunta del foro actualizada',
+                timer: 3000,
+                timerProgressBar: true
+                });
+            }
+            });
+        });
+        });                                

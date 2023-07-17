@@ -14,7 +14,7 @@ exports.viewLogin = (req, res) => res.render('login');
 /* auth/login */
 exports.login = async (req, res, next) => {
   const { correo, clave } = req.body;
-  const sessionId = req.sessionID;
+  let = sessionId = req.sessionID;
 
   const user = await Usuario.findOne({ where: { mail: correo } });
   const validado = user && await bcrypt.compare(clave, user.clave);

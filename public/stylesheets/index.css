@@ -42,6 +42,8 @@ body {
 .pregunta {
   background-color: rgb(255, 255, 255);
   border: 1px solid #86a7f062;
+  word-wrap: break-word; /* Permite que las palabras se dividan en varias líneas si es necesario */
+ 
   padding: 32px;
   margin-bottom: 5px;
   font-size: 20px;
@@ -63,11 +65,19 @@ body {
 .contain-preguntas {
   height: 500px;
   overflow-y: scroll;
+}
 
+.input-foro{
+  height: 60px;
+}
+
+.btn-foro{
+  width: 100px;
+  margin-left: 5px;
 }
 
 #foro {
-  height: 750px;
+  height: auto;
   width: 100%;
   border-top: none;
   padding-top: 80px;
@@ -345,3 +355,8 @@ main>div>a:hover {
  .cta:active {
   transform: scale(0.95);
  }
+
+
+
+
+

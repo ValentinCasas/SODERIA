@@ -22,8 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     pregunta: DataTypes.STRING,
     fecha: DataTypes.DATE,
-    respuesta: DataTypes.STRING,
-    idAdmin: DataTypes.INTEGER,
+    respuesta: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    idAdmin: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
     aceptado: DataTypes.BOOLEAN
   }, {
     sequelize,
