@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Publicacion, {foreignKey: 'idAdmin'})
+      this.hasMany(models.Publicacion, { foreignKey: 'idAdmin' })
       this.belongsTo(models.Comercio, { foreignKey: 'idComercio' })
-      this.hasMany(models.Foro, {foreignKey: 'idAdmin'})
+      this.hasMany(models.Foro, { foreignKey: 'idAdmin' })
     }
   }
   Usuario.init({
@@ -30,7 +30,10 @@ module.exports = (sequelize, DataTypes) => {
     imagenUrl: DataTypes.STRING,
     fechaRegistro: DataTypes.DATE,
     rol: DataTypes.INTEGER,
-    idComercio: DataTypes.INTEGER
+    idComercio: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'Usuario',

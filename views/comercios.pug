@@ -1,0 +1,186 @@
+extends layout
+
+block content
+    head
+        title Actualizar
+
+        link(rel='stylesheet' href='/producto.css')
+        link(rel='stylesheet' href='/carrito-compras.css')
+        link(rel='stylesheet' href='/nav.css')
+        link(rel='stylesheet' href='/map.css')
+
+        script(src="/redireccion-menu.js" defer)
+        script(src="/comercio.js" defer)
+
+    body
+
+
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+            .container-fluid
+                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                a.navbar-brand(href="/") SODERIA
+                #navbar.collapse.navbar-collapse
+                    ul.navbar-nav.ms-auto.p-2
+                        li.nav-item.mx-3
+                            a.nav-link(href="/home") Inicio
+
+                        if locals.isLoggedIn 
+                            li.nav-item.mx-3
+                                a.nav-link(href="") algo 
+                            div.nav-item.dropdown
+                                a.nav-link.dropdown-toggle.active(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                                    | Productos
+                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+
+                                    li
+                                        a.dropdown-item(href="javascript:void(0)")#productos Crear   
+                                    li
+                                        a.dropdown-item(href="/productos/view-agregar") agregar  
+                                    li
+                                        a.dropdown-item(href="") algo   
+
+                            div.nav-item.dropdown.mx-3
+                                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                                    | Aceptar
+                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+                                    li
+                                        a.dropdown-item(href="/foro/view-preguntas") preguntas foro
+
+
+                        li.nav-item.dropdown.mx-3
+                            a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Sesión
+                            ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
+                                if !locals.isLoggedIn 
+                                li
+                                    hr.dropdown-divider
+                                if locals.isLoggedIn 
+                                    li
+                                        a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
+
+        section.carrito.p-lg-5.p-2
+            .titulo.mb-5.mt-5.d-flex.justify-content-center
+                h2 COMERCIOS
+            form(action="/comercio/actualizar" method="post").row
+                each comercio in Comercios
+                    .col-lg-3.col-md-4.col-sm-6.col-12.d-flex.justify-content-center
+                        .card.m-2(id=`comercio-${comercio.id}`)
+                            button.btn-borrar(type="button", data-url=`/comercio/eliminar/${comercio.id}`, onclick=`eliminarComercio(event,${comercio.id})`)
+                                svg.icon(viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg")
+                                    path#Fill(transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z")
+
+                            img.card-img-top(src=`/${comercio.imagenUrl}`, alt="Imagen del comercio")
+                            .card-body
+                                input(type="file" name=`imagen-${comercio.id}`).form-control.card-title.title
+                                input(type="text" value=`${comercio.nombre}` name=`nombre-${comercio.id}`).form-control.card-title.title
+                                input(type="text" value=`${comercio.direccion}` name=`direccion-${comercio.id}`).form-control.card-text.direccion
+
+                                .map-container
+                                    #map(class=`map-${comercio.id}`)
+                                    input(type="hidden" value=`${comercio.latitud}` name=`latitud-${comercio.id}`).form-control.card-text.latitud
+                                    input(type="hidden" value=`${comercio.longitud}` name=`longitud-${comercio.id}`).form-control.card-text.longitud
+                                input(type="hidden" name="id", value=`${comercio.id}`)
+
+
+                button(type="submit").Btn.btn-agregar
+                    | Edit 
+                    svg.svg(viewBox="0 0 512 512")
+                        path(d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z")
+
+    //eliminar comercio
+    script.
+        function eliminarComercio(event, idComercio) {
+            event.preventDefault();
+
+            const url = `/comercio/eliminar/${idComercio}`;
+
+            swal({
+                title: "¿Estás seguro?",
+                text: "Esta acción eliminará el comercio",
+                icon: "warning",
+                buttons: ["Cancelar", "Eliminar"],
+                dangerMode: true,
+            }).then((confirm) => {
+                if (confirm) {
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function(response) {
+                            if (response.success) {
+                                swal({
+                                    icon: 'success',
+                                    title: '¡Éxito!',
+                                    text: 'El comercio ha sido eliminado',
+                                    timer: 3000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    // Eliminar la card del producto del DOM
+                                    const cardId = `#comercio-${idComercio}`;
+                                    $(cardId).remove();
+                                });
+                            } else {
+                                swal({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar el comercio'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            swal({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Ocurrió un error al eliminar el comercio'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+
+    //actualizar producto
+    script.
+        $(document).ready(function() {
+            $('form').submit(function(e) {
+                e.preventDefault(); // Evita el envío normal del formulario
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/comercio/actualizar',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            // Éxito al actualizar productos
+                            swal({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: response.message,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+
+                        } else {
+                            // Error al actualizar productos
+                            swal({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Error en la solicitud AJAX
+                        swal({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un error al intentar actualizar los comercios'
+                        });
+                    }
+                });
+            });
+                });

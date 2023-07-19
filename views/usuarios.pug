@@ -4,11 +4,11 @@ block content
 
   head 
 
-    title Home
+    title Usuarios
 
-    link(rel='stylesheet' href='/home.css')
+    link(rel='stylesheet' href='/usuario.css')
     link(rel='stylesheet' href='/nav.css')
-    script(src="/home.js" defer)
+    script(src="/usuario.js" defer)
     script(src="/redireccion-menu.js" defer)
 
   body  
@@ -34,28 +34,24 @@ block content
               if locals.role == "administrador"
                 div.nav-item.dropdown
                   a.nav-link.dropdown-toggle.mx-3(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                    | Crear
+                    | Empleados
                   ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
 
                     li
-                      a.dropdown-item(href="/productos") Producto  
+                      a.dropdown-item(href="#") Crear   
                     li
-                      a.dropdown-item(href="/usuario/view-crear") Empleado  
-                    li
-                      a.dropdown-item(href="/comercio/view-crear") Comercio     
+                      a.dropdown-item(href="#") actualizar  
 
 
               div.nav-item.dropdown
                 a.nav-link.dropdown-toggle.mx-3(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                  | Actualizar
+                  | Productos
                 ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
 
                   li
-                    a.dropdown-item(href="/productos/view-agregar") Producto 
+                    a.dropdown-item(href="javascript:void(0)")#productos Crear   
                   li
-                    a.dropdown-item(href="/usuario/view-actualizar") Empleado 
-                  li
-                    a.dropdown-item(href="/comercio/view-comercios") Comercio   
+                    a.dropdown-item(href="/productos/view-agregar") actualizar 
 
                            
 

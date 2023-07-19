@@ -1,0 +1,211 @@
+extends layout
+
+block content
+
+  head 
+
+    title Crear
+
+    link(rel='stylesheet' href='/usuario.css')
+    link(rel='stylesheet' href='/nav.css')
+    script(src="/usuario.js" defer)
+    link(rel='stylesheet' href='/producto.css')
+    script(src="/redireccion-menu.js" defer)
+
+  body  
+
+
+
+
+
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+      .container-fluid
+        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        a.navbar-brand(href="/") SODERIA
+        #navbar.collapse.navbar-collapse
+          ul.navbar-nav.ms-auto.p-2
+            li.nav-item.mx-3
+              a.nav-link(href="/") Inicio
+
+            li.nav-item.mx-3
+              a.nav-link.active(href="/home") Home
+
+            if locals.isLoggedIn 
+              if locals.role == "administrador"
+                div.nav-item.dropdown
+                  a.nav-link.dropdown-toggle.mx-3(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                    | Empleados
+                  ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+
+                    li
+                      a.dropdown-item(href="#") Crear   
+                    li
+                      a.dropdown-item(href="#") actualizar  
+
+
+              div.nav-item.dropdown
+                a.nav-link.dropdown-toggle.mx-3(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                  | Productos
+                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+
+                  li
+                    a.dropdown-item(href="javascript:void(0)")#productos Crear   
+                  li
+                    a.dropdown-item(href="/productos/view-agregar") actualizar 
+
+
+
+              li.nav-item.mx-3
+                a.nav-link(href="#") Pedidos     
+
+
+              div.nav-item.dropdown.mx-3
+                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
+                  | Aceptar
+                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
+                  li
+                    a.dropdown-item(href="/foro/view-preguntas") preguntas foro
+
+
+            li.nav-item.dropdown.mx-3
+              a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Mi cuenta
+              ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
+                if !locals.isLoggedIn 
+                li
+                  a.dropdown-item(href="") actualizar perfil 
+                  hr.dropdown-divider
+                if locals.isLoggedIn 
+                  li
+                    a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
+
+    section#form.d-flex.justify-content-start.align-item-start
+      //formularo de registro
+      form.form.col.col-xs-12.col-sm-12.col-md-6.col-lg-8(action="/productos/agregar" method="post" enctype="multipart/form-data")
+        p.form-title.mt-4 Crea un usuario
+
+        .row.input-container
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            .row.input-container
+              .col-12
+                .form-floating
+                  input.form-control#nombreInput(name="nombre" placeholder="nombre" type="text")
+                  label(for="nombreInput") Nombre
+            .row.input-container
+              .col-12
+                .form-floating
+                  input.form-control#descripcionInput(name="descripcion" placeholder="descripcion" type="text")
+                  label(for="descripcionInput") descripcion
+            .row.input-container
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                .form-floating
+                  input.form-control#compraInput(name="precioCompra" placeholder="precio de compra" type="number")
+                  label(for="compraInput") precio compra
+
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                .form-floating
+                  input.form-control#ventaInput(name="precioVenta" placeholder="precio de venta" type="number")
+                  label(for="ventaInput") Precio venta
+
+
+        .container.col.col-lg-4.col-md-4.col-sm-6.col-xs-12
+          .header
+            svg(viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg")
+              g#SVGRepo_bgCarrier(stroke-width="0")
+              g#SVGRepo_tracerCarrier(stroke-linecap="round" stroke-linejoin="round")
+              g#SVGRepo_iconCarrier
+                path(d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round")
+            p foto del producto
+          label.footer(for="file")
+            svg(fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg")
+              g#SVGRepo_bgCarrier(stroke-width="0")
+              g#SVGRepo_tracerCarrier(stroke-linecap="round" stroke-linejoin="round")
+              g#SVGRepo_iconCarrier
+                path(d="M15.331 6H8.5v20h15V14.154h-8.169")
+                path(d="M18.153 6h-.009v5.342H23.5v-.002")
+            p Nada seleccionado
+            svg(viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg")
+              g#SVGRepo_bgCarrier(stroke-width="0")
+              g#SVGRepo_tracerCarrier(stroke-linecap="round" stroke-linejoin="round")
+              g#SVGRepo_iconCarrier
+                path(d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 10.1534Z" stroke="#000000" stroke-width="2")
+                path(d="M19.5 5H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round")
+                path(d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z" stroke="#000000" stroke-width="2")
+          input#file(type="file" name="imagenUrl")
+
+        button.submit.mt-4(type="submit") CREAR
+
+
+
+      .recomendaciones.col.col-lg-4.col-md-6.d-none.d-md-block
+        .titulo.mt-4.mb-3.d-flex.justify-content-center
+
+        .container.contain-preguntas
+          .pregunta
+            details
+              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
+              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
+              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload        
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
+              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
+              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload     
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
+              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
+              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload      
+            details
+              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
+              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
+              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload    
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
+              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
+
+            details
+              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
+              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload      
+
+
+    //crear producto
+    script.
+      $(document).ready(function() {
+      $('form').submit(function(e) {
+        e.preventDefault(); // Evita el envío normal del formulario
+
+        var formData = new FormData(this);
+
+        $.ajax({
+        url: '/productos/agregar',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          swal({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Producto agregado correctamente',
+          timer: 3000,
+          timerProgressBar: true
+          });
+        }
+        });
+      });
+      });  
+

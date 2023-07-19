@@ -16,6 +16,8 @@ const indexRouter = require('./routes/index');
 const homeRouter = require('./routes/home');
 const productoRouter = require('./routes/producto');
 const foroRouter = require('./routes/foro');
+const usuarioRouter = require('./routes/usuario');
+const comercioRouter = require('./routes/comercio');
 
 var app = express();
 
@@ -37,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public/stylesheets')));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
 app.use(express.static(path.join(__dirname, 'public/images')));
 app.use(express.static(path.join(__dirname, 'public/imagen-producto')));
+app.use(express.static(path.join(__dirname, 'public/imagen-comercio')));
 app.use(express.static(path.join(__dirname, 'public/imagenes-por-defecto')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -57,6 +60,8 @@ app.use('/auth', authRouter);
 app.use('/home', homeRouter);
 app.use('/productos', productoRouter);
 app.use('/foro', foroRouter);
+app.use('/usuario', usuarioRouter);
+app.use('/comercio', comercioRouter);
 
 
 

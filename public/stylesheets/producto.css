@@ -1,5 +1,5 @@
 :root {
-    --color-amarillo-global: #ffc107;
+    --color-amarillo-global: #2bace2;
     --color-grey-background2: #1f1f1f;
 }
 
@@ -211,11 +211,23 @@
 
 }
 
+.contain-preguntas {
+    height: 500px;
+    overflow-y: scroll;
+    background-color: rgba(255, 255, 255, 0);
+}
+
 .pregunta>details>summary {
     font-size: 22px;
-    color: #155892;
+    color: #05090c;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.pregunta>details>p {
+    font-size: 17px;
+    color: #2e3031;
+
 }
 
 .respuesta {
@@ -267,6 +279,7 @@
     border-radius: 10px;
     box-shadow: 5px 5px 0px rgb(13, 10, 190);
     transition-duration: .3s;
+    z-index: 1000;
 }
 
 .svg {
