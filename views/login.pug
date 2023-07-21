@@ -1,4 +1,4 @@
-extends layout
+extends layout-index
 
 block content
 
@@ -12,8 +12,8 @@ block content
 
 
     form(action="/auth/login" method="post").login.col.col-11.col-lg-6.col-sm-10
-      input(type="text" name="correo" placeholder="Username" required)
-      input(type="password" name="clave" placeholder="Password" required)
+      input(type="text" name="correo" placeholder="Mail" required)
+      input(type="password" name="clave" placeholder="Contraseña" required)
       button(type="submit")  Login
 
 

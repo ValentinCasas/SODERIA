@@ -1,0 +1,48 @@
+extends layout
+
+block content
+
+  head 
+
+    title Usuarios
+
+    link(rel="stylesheet" href="/mi-perfil.css")
+    script(src="/mi-perfil.js" defer) 
+
+
+
+  body
+
+    #separador
+
+    .blog-slider
+      .blog-slider__wrp.swiper-wrapper
+
+            .blog-slider__item.swiper-slide
+              .blog-slider__img
+                img(src=`/${Usuario.imagenUrl}`, alt="")
+              .blog-slider__content
+                span.blog-slider__code #{Usuario.nombreCompleto}
+                div.blog-slider__title #{Usuario.mail}
+                div.blog-slider__text #{Usuario.telefono}
+                a.blog-slider__button(href="/usuario/view-editar-perfil") EDITAR PERFIL
+
+            .blog-slider__item.swiper-slide
+              .blog-slider__img
+                img(src=`/${Usuario.imagenUrl}`, alt="")
+              .blog-slider__content
+                span.blog-slider__code #{Usuario.correoContacto}
+                div.blog-slider__title #{Usuario.fechaRegistro} 
+                div.blog-slider__text #{Rol[Usuario.rol]} 
+                a.blog-slider__button(href="/usuario/view-editar-perfil") EDITAR PERFIL
+
+            .blog-slider__item.swiper-slide
+              .blog-slider__img
+                img(src=`/${Usuario.imagenUrl}`, alt="")
+              .blog-slider__content
+                span.blog-slider__code #{Comercio.nombre}
+        
+      .blog-slider__pagination
+
+
+

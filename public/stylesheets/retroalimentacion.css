@@ -1,0 +1,131 @@
+#hacer-retroalimentacion {
+    min-height: 100vh;
+    width: 100%;
+    border-top: none;
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    background-image: url('/wave7.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+
+.testimonial-reel {
+
+    background-image: url('/wave8.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    
+}
+
+.box {
+    margin-top: 80px;
+}
+
+.testimonial-reel .box {
+    position: relative;
+    margin-bottom: 30px;
+    
+}
+
+.testimonial-reel .box .image {
+    margin: 0 auto -45px;
+    text-align: center;
+}
+
+.testimonial-reel .box .image img {
+    height: 130px;
+    margin: 0 auto;
+}
+
+.testimonial-reel .box .test-component {
+    background-color: #fff;
+    padding: 1rem 2.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    min-height: 200px;
+}
+
+.testimonial-reel .box .test-title {
+    font-family: "Open Sans", sans-serif;
+    color: #f96d02;
+    text-align: center;
+    margin-top: 3.3rem;
+    margin-bottom: 15px;
+}
+
+.testimonial-reel .box .test-content {
+    text-align: center;
+}
+
+.testimonial-reel .slick-slide {
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.testimonial-reel .slick-slide.slick-cloned {
+    opacity: 0.3;
+    transition: opacity 0.3s;
+}
+
+.testimonial-reel .slick-slide.slick-current.slick-active {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+
+
+
+.btn-borrar {
+    background-color: transparent;
+    position: absolute;
+    right: 2px;
+    top: 0px;
+    border: none;
+    z-index: 1000;
+}
+
+.btn-borrar::after {
+    content: 'Borrar';
+    position: absolute;
+    top: -130%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(168, 7, 7);
+    padding: 4px 8px;
+    border-radius: 5px;
+    transition: .2s linear;
+    transition-delay: .2s;
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.icon {
+    transform: scale(1.2);
+    transition: .2s linear;
+}
+
+.btn-borrar:hover>.icon {
+    transform: scale(1.5);
+}
+
+.btn-borrar:hover>.icon path {
+    fill: rgb(168, 7, 7);
+}
+
+.btn-borrar:hover::after {
+    visibility: visible;
+    opacity: 1;
+    top: -160%;
+}
+

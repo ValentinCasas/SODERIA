@@ -7,9 +7,7 @@ block content
     title Home
 
     link(rel='stylesheet' href='/home.css')
-    link(rel='stylesheet' href='/nav.css')
     script(src="/home.js" defer)
-    script(src="/redireccion-menu.js" defer)
 
   body  
 
@@ -17,69 +15,4 @@ block content
 
 
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-      .container-fluid
-        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
-          span.navbar-toggler-icon
-        a.navbar-brand(href="/") SODERIA
-        #navbar.collapse.navbar-collapse
-          ul.navbar-nav.ms-auto.p-2
-            li.nav-item.mx-3
-              a.nav-link(href="/") Inicio
-
-            li.nav-item.mx-3
-              a.nav-link.active(href="/home") Home
-
-            if locals.isLoggedIn 
-              if locals.role == "administrador"
-                div.nav-item.dropdown
-                  a.nav-link.dropdown-toggle.mx-3(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                    | Crear
-                  ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-
-                    li
-                      a.dropdown-item(href="/productos") Producto  
-                    li
-                      a.dropdown-item(href="/usuario/view-crear") Empleado  
-                    li
-                      a.dropdown-item(href="/comercio/view-crear") Comercio     
-
-
-              div.nav-item.dropdown
-                a.nav-link.dropdown-toggle.mx-3(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                  | Actualizar
-                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-
-                  li
-                    a.dropdown-item(href="/productos/view-agregar") Producto 
-                  li
-                    a.dropdown-item(href="/usuario/view-actualizar") Empleado 
-                  li
-                    a.dropdown-item(href="/comercio/view-comercios") Comercio   
-
-                           
-
-              li.nav-item.mx-3
-                a.nav-link(href="#") Pedidos     
-
-
-              div.nav-item.dropdown.mx-3
-                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                  | Aceptar
-                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-                  li
-                    a.dropdown-item(href="/foro/view-preguntas") preguntas foro
-
-
-            li.nav-item.dropdown.mx-3
-              a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Mi cuenta
-              ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
-                if !locals.isLoggedIn 
-                li
-                  a.dropdown-item(href="") actualizar perfil 
-                  hr.dropdown-divider
-                if locals.isLoggedIn 
-                  li
-                    a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
-
-
+   

@@ -4,15 +4,14 @@ block content
 
     head 
 
-        title Home
+        title Foro
 
         link(rel='stylesheet' href='/preguntas-foro.css')
-        link(rel='stylesheet' href='/nav.css')
-
+        link(rel='stylesheet' href='/retroalimentacion.css')
         script(src="/preguntas-foro.js" defer)
 
         script(src="/home.js" defer)
-        script(src="/redireccion-menu.js" defer)
+
 
     body  
 
@@ -20,48 +19,6 @@ block content
 
 
 
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-            .container-fluid
-                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
-                    span.navbar-toggler-icon
-                a.navbar-brand(href="/") SODERIA
-                #navbar.collapse.navbar-collapse
-                    ul.navbar-nav.ms-auto.p-2
-                        li.nav-item.mx-3
-                            a.nav-link(href="/home") Inicio
-
-                        if locals.isLoggedIn 
-                            li.nav-item.mx-3
-                                a.nav-link(href="") algo 
-                            div.nav-item.dropdown
-                                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                                    | Productos
-                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-
-                                    li
-                                        a.dropdown-item(href="javascript:void(0)")#productos Crear   
-                                    li
-                                        a.dropdown-item(href="") algo   
-                                    li
-                                        a.dropdown-item(href="") algo   
-
-                            div.nav-item.dropdown.mx-3
-                                a.nav-link.dropdown-toggle.active(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                                    | Aceptar
-                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-                                    li
-                                        a.dropdown-item(href="/foro/view-preguntas") preguntas foro
-
-
-                        li.nav-item.dropdown.mx-3
-                            a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Sesión
-                            ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
-                                if !locals.isLoggedIn 
-                                li
-                                    hr.dropdown-divider
-                                if locals.isLoggedIn 
-                                    li
-                                        a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
 
 
         .app.mt-5
@@ -77,7 +34,11 @@ block content
                 .project-tasks
 
                     each pregunta in ForoEnProceso
-                        .task(draggable='true')
+                        .task(draggable='true' id=`pregunta-${pregunta.id}`)
+                            button.btn-borrar(type="button", data-url=`/foro/eliminar/${pregunta.id}`, onclick=`eliminarPregunta(event,${pregunta.id})`)
+                                svg.icon(viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg")
+                                    path#Fill(transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z")
+
                             .task__tags
 
                             p= pregunta.pregunta
@@ -95,7 +56,11 @@ block content
 
                 .project-tasks
                     each pregunta in ForoAceptado
-                        .task(draggable='true')
+                        .task(draggable='true' id=`pregunta-${pregunta.id}`)
+                            button.btn-borrar(type="button", data-url=`/foro/eliminar/${pregunta.id}`, onclick=`eliminarPregunta(event,${pregunta.id})`)
+                                svg.icon(viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg")
+                                    path#Fill(transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z")
+
                             .task__tags
 
                             p= pregunta.pregunta
@@ -156,6 +121,59 @@ block content
                                     .modal-footer
                                         button.btn.btn-primary(type="submit") Enviar  
 
+
+
+
+    //eliminar producto
+    script.
+        function eliminarPregunta(event, idPregunta) {
+            event.preventDefault();
+
+            const url = `/foro/eliminar/${idPregunta}`;
+
+            swal({
+                title: "¿Estás seguro?",
+                text: "Esta acción eliminará la pregunta",
+                icon: "warning",
+                buttons: ["Cancelar", "Eliminar"],
+                dangerMode: true,
+            }).then((confirm) => {
+                if (confirm) {
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function(response) {
+                            if (response.success) {
+                                swal({
+                                    icon: 'success',
+                                    title: '¡Éxito!',
+                                    text: 'La pregunta ha sido eliminada',
+                                    timer: 3000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    // Eliminar la card del producto del DOM
+                                    const cardId = `#pregunta-${idPregunta}`;
+                                    $(cardId).remove();
+                                });
+                            } else {
+                                swal({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar la pregunta'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            swal({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Ocurrió un error al eliminar la pregunta'
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
 
 

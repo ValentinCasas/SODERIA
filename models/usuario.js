@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    sessionId: DataTypes.STRING,
     nombreCompleto: DataTypes.STRING,
     mail: DataTypes.STRING,
     clave: DataTypes.STRING,

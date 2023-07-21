@@ -46,3 +46,4 @@ fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   showFile(file);
 });
+

@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const fs = require('fs');
 
+
+
 exports.viewProductos = async (req, res, next) => {
 
     const productos = await Producto.findAll();
@@ -38,7 +40,6 @@ exports.eliminarProducto = async (req, res, next) => {
         next(error);
     }
 }
-
 
 
 exports.actualizarProductos = async (req, res, next) => {
@@ -123,7 +124,6 @@ exports.actualizarProductos = async (req, res, next) => {
 exports.agregarProducto = async (req, res, next) => {
     try {
         const { nombre, descripcion, precioCompra, precioVenta } = req.body;
-        const usuario = await Usuario.findOne({ where: { sessionId: req.sessionID } });
 
         let rutaImagen = "";
         let imagenProducto;

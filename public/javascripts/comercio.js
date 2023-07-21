@@ -53,3 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     obtenerUbicacionInicial(contenedoresMapa[0]); // Inicializar el mapa para la primera tarjeta
 });
+
+
+
+

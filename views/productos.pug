@@ -7,59 +7,16 @@ block content
         link(rel='stylesheet' href='/nav.css')
         script(src="/producto.js" defer)
 
-        script(src="/redireccion-menu.js" defer)
 
     body
 
-
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-            .container-fluid
-                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
-                    span.navbar-toggler-icon
-                a.navbar-brand(href="/") SODERIA
-                #navbar.collapse.navbar-collapse
-                    ul.navbar-nav.ms-auto.p-2
-                        li.nav-item.mx-3
-                            a.nav-link(href="/home") Inicio
-
-                        if locals.isLoggedIn 
-                            li.nav-item.mx-3
-                                a.nav-link(href="") algo 
-                            div.nav-item.dropdown
-                                a.nav-link.dropdown-toggle.active(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                                    | Productos
-                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-
-                                    li
-                                        a.dropdown-item(href="javascript:void(0)")#productos Crear   
-                                    li
-                                        a.dropdown-item(href="") algo   
-                                    li
-                                        a.dropdown-item(href="") algo   
-
-                            div.nav-item.dropdown.mx-3
-                                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                                    | Aceptar
-                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-                                    li
-                                        a.dropdown-item(href="/foro/view-preguntas") preguntas foro
-
-
-                        li.nav-item.dropdown.mx-3
-                            a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Sesión
-                            ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
-                                if !locals.isLoggedIn 
-                                li
-                                    hr.dropdown-divider
-                                if locals.isLoggedIn 
-                                    li
-                                        a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
 
 
         section#form.d-flex.justify-content-start.align-item-start
             //formularo de registro
             form.form.col.col-xs-12.col-sm-12.col-md-6.col-lg-8(action="/productos/agregar" method="post" enctype="multipart/form-data")
                 p.form-title.mt-4 Crea un producto
+
 
                 .row.input-container
                     .col-lg-12.col-md-12.col-sm-12.col-xs-12

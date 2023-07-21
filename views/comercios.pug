@@ -6,80 +6,51 @@ block content
 
         link(rel='stylesheet' href='/producto.css')
         link(rel='stylesheet' href='/carrito-compras.css')
-        link(rel='stylesheet' href='/nav.css')
         link(rel='stylesheet' href='/map.css')
+        link(rel="stylesheet" href="comercio.css")
 
-        script(src="/redireccion-menu.js" defer)
         script(src="/comercio.js" defer)
 
     body
 
 
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-            .container-fluid
-                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
-                    span.navbar-toggler-icon
-                a.navbar-brand(href="/") SODERIA
-                #navbar.collapse.navbar-collapse
-                    ul.navbar-nav.ms-auto.p-2
-                        li.nav-item.mx-3
-                            a.nav-link(href="/home") Inicio
-
-                        if locals.isLoggedIn 
-                            li.nav-item.mx-3
-                                a.nav-link(href="") algo 
-                            div.nav-item.dropdown
-                                a.nav-link.dropdown-toggle.active(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                                    | Productos
-                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-
-                                    li
-                                        a.dropdown-item(href="javascript:void(0)")#productos Crear   
-                                    li
-                                        a.dropdown-item(href="/productos/view-agregar") agregar  
-                                    li
-                                        a.dropdown-item(href="") algo   
-
-                            div.nav-item.dropdown.mx-3
-                                a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false")
-                                    | Aceptar
-                                ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown1")
-                                    li
-                                        a.dropdown-item(href="/foro/view-preguntas") preguntas foro
 
 
-                        li.nav-item.dropdown.mx-3
-                            a.nav-link.dropdown-toggle(href="#" role="button" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false") Sesión
-                            ul.dropdown-menu.dropdown-menu-end(aria-labelledby="dropdown2")
-                                if !locals.isLoggedIn 
-                                li
-                                    hr.dropdown-divider
-                                if locals.isLoggedIn 
-                                    li
-                                        a.dropdown-item(href='javascript:void(0)' onclick=`confirmarLogout()`) Cerrar sesión
 
         section.carrito.p-lg-5.p-2
-            .titulo.mb-5.mt-5.d-flex.justify-content-center
+            .titulo.mb-3.mt-5.d-flex.justify-content-center
                 h2 COMERCIOS
             form(action="/comercio/actualizar" method="post").row
                 each comercio in Comercios
-                    .col-lg-3.col-md-4.col-sm-6.col-12.d-flex.justify-content-center
+                    .col-lg-3.col-md-4.col-sm-6.col-12.mb-4.d-flex.justify-content-center
                         .card.m-2(id=`comercio-${comercio.id}`)
                             button.btn-borrar(type="button", data-url=`/comercio/eliminar/${comercio.id}`, onclick=`eliminarComercio(event,${comercio.id})`)
                                 svg.icon(viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg")
                                     path#Fill(transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z")
 
                             img.card-img-top(src=`/${comercio.imagenUrl}`, alt="Imagen del comercio")
-                            .card-body
-                                input(type="file" name=`imagen-${comercio.id}`).form-control.card-title.title
-                                input(type="text" value=`${comercio.nombre}` name=`nombre-${comercio.id}`).form-control.card-title.title
-                                input(type="text" value=`${comercio.direccion}` name=`direccion-${comercio.id}`).form-control.card-text.direccion
 
-                                .map-container
-                                    #map(class=`map-${comercio.id}`)
-                                    input(type="hidden" value=`${comercio.latitud}` name=`latitud-${comercio.id}`).form-control.card-text.latitud
-                                    input(type="hidden" value=`${comercio.longitud}` name=`longitud-${comercio.id}`).form-control.card-text.longitud
-                                input(type="hidden" name="id", value=`${comercio.id}`)
+
+                            
+
+                            div(id=`campos-${comercio.id}`)
+
+                                .card-body
+                                    input(type="file" name=`imagen-${comercio.id}`).form-control.card-title.title
+
+                                    .form-floating 
+                                        input(type="text" placeholder="nombre" value=`${comercio.nombre}` name=`nombre-${comercio.id}`).form-control.card-title.title#nombreInput
+                                        label(for="nombreInput") nombre    
+
+                                    .form-floating    
+                                        input(type="text" placeholder="dirección" value=`${comercio.direccion}` name=`direccion-${comercio.id}`).form-control.card-text.direccion#direccionInput
+                                        label(for="direccionInput") dirección    
+
+                                    .map-container
+                                        #map(class=`map-${comercio.id}`)
+                                        input(type="hidden" value=`${comercio.latitud}` name=`latitud-${comercio.id}`).form-control.card-text.latitud
+                                        input(type="hidden" value=`${comercio.longitud}` name=`longitud-${comercio.id}`).form-control.card-text.longitud
+                                    input(type="hidden" name="id", value=`${comercio.id}`)
 
 
                 button(type="submit").Btn.btn-agregar

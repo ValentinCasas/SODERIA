@@ -11,6 +11,10 @@
     flex-grow: 1;
 }
 
+h2{
+    color: rgb(245, 245, 245);
+}
+
 .form {
 
     height: auto;
@@ -272,12 +276,12 @@
     height: 40px;
     border: none;
     padding: 0px 20px;
-    background-color: rgb(37, 40, 218);
+    background-color: #007bff;
     color: white;
     font-weight: 500;
     cursor: pointer;
     border-radius: 10px;
-    box-shadow: 5px 5px 0px rgb(13, 10, 190);
+    box-shadow: 5px 5px 0px #0271e7;
     transition-duration: .3s;
     z-index: 1000;
 }
@@ -306,7 +310,7 @@
 .Btn:active {
     transform: translate(3px, 3px);
     transition-duration: .3s;
-    box-shadow: 2px 2px 0px rgb(3, 0, 190);
+    box-shadow: 2px 2px 0px #1f76d3;
 }
 
 
@@ -357,4 +361,27 @@
     visibility: visible;
     opacity: 1;
     top: -160%;
+}
+
+
+
+
+.carrito {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('/wave7.svg');
+    background-color: #56b4dc;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    overflow-x: hidden;
+}
+
+
+
+.card-img-top-profile{
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
