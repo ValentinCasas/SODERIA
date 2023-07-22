@@ -1,4 +1,4 @@
-const { Foro, Usuario, Producto, Retroalimentacion } = require("../models");
+const { Foro, Usuario, Producto, Retroalimentacion, Publicacion } = require("../models");
 
 const fs = require('fs');
 
@@ -27,3 +27,4 @@ exports.viewIndex = async (req, res, next) => {
         ImagenesUrls: imagenesUrls
     });
 }
+

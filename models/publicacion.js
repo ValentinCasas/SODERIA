@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
+    titulo: DataTypes.STRING,
+    fechaSubida: DataTypes.DATE,
     descripcion: DataTypes.STRING,
     imagenUrl: DataTypes.STRING,
     idAdmin: DataTypes.INTEGER

@@ -123,33 +123,7 @@ block content
         });
 
 
-    //nav
-    div.nav.d-flex.justify-content-between.align-items-center.p-2
-      .contain-btn-empleado
-        a(href="auth/view/login").cta
-          span Soy empleado
-          svg(viewBox="0 0 13 10" height="10px" width="15px")
-            path(d="M1,5 L11,5")
-            polyline(points="8 1 12 5 8 9")
-
-      a.cart-icon(data-toggle="modal" data-target="#carritoModal")
-        span#totalItems 0
-
-      div.modal#carritoModal.p-2
-        form.modal-dialog(action="/comprar" method="POST")
-          .modal-content
-            .modal-header
-              h5.modal-title Mi carrito
-              span.total-suma
-            .modal-body
-              ul.cart
-            .modal-footer
-              input.form-control(type="text" name="nombre" placeholder="Nombre del comprador" required)
-              input.form-control(type="text" name="contacto" placeholder="Teléfono/Correo electrónico" required)
-              input.form-control(type="text" name="metodoPago" placeholder="Método de pago" required)
-              button.btn.btn-primary(ids="generarObjetoBtn" type="submit") Hacer pedido
-              button.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar
-
+    
 
     a(href="whatsapp://send?phone=2665018537")
       svg(viewBox="0 0 32 32" class="whatsapp-ico")

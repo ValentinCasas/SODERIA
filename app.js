@@ -22,7 +22,9 @@ const productoRouter = require('./routes/producto');
 const foroRouter = require('./routes/foro');
 const usuarioRouter = require('./routes/usuario');
 const comercioRouter = require('./routes/comercio');
-const retroalimentacionRuter = require('./routes/retroalimentacion');
+const retroalimentacionRouter = require('./routes/retroalimentacion');
+const blogRouter = require('./routes/blog');
+const comentariosRouter = require('./routes/comentario');
 
 
 var app = express();
@@ -49,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public/imagen-comercio')));
 app.use(express.static(path.join(__dirname, 'public/imagen-usuario')));
 app.use(express.static(path.join(__dirname, 'public/imagenes-por-defecto')));
 app.use(express.static(path.join(__dirname, 'public/imagenes-retroalimentacion')));
+app.use(express.static(path.join(__dirname, 'public/archivo-publicacion')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -86,7 +89,9 @@ app.use('/productos', isAutenticatedBD, productoRouter);
 app.use('/foro', foroRouter);
 app.use('/usuario', isAutenticatedBD, usuarioRouter);
 app.use('/comercio', isAutenticatedBD, comercioRouter);
-app.use('/retroalimentacion', retroalimentacionRuter);
+app.use('/retroalimentacion', retroalimentacionRouter);
+app.use('/blog', blogRouter);
+app.use('/comentarios', comentariosRouter);
 
 
 

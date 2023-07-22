@@ -30,12 +30,61 @@ html
 
 
     script(src="/sweetAlert.js" defer)
-
+    link(rel='stylesheet' href='/carrito-compras.css')
     link(rel='stylesheet' href='/nav.css')
 
 
   body
     block content
+
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+      .container-fluid
+        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        .contain-btn-empleado
+          a(href="/auth/view/login").cta
+            span Soy empleado
+            svg(viewBox="0 0 13 10" height="10px" width="15px")
+              path(d="M1,5 L11,5")
+              polyline(points="8 1 12 5 8 9")
+
+        #navbar.collapse.navbar-collapse
+          ul.navbar-nav.ms-auto.p-2
+
+            li.nav-item.mx-3
+              a.nav-link(href="/") INICIO
+
+            li.nav-item.mx-3
+              a.nav-link(href="blog/view-blog") BLOG
+
+
+            if locals.isLoggedIn 
+              li.nav-item.mx-3
+                a.nav-link(href="/home") Home
+
+
+
+            a.cart-icon(data-toggle="modal" data-target="#carritoModal" ).mx-3
+              span#totalItems 0
+
+
+        div.modal#carritoModal.p-2
+          form.modal-dialog(action="/comprar" method="POST")
+            .modal-content
+              .modal-header
+                h5.modal-title Mi carrito
+                span.total-suma
+              .modal-body
+                ul.cart
+              .modal-footer
+                input.form-control(type="text" name="nombre" placeholder="Nombre del comprador" required)
+                input.form-control(type="text" name="contacto" placeholder="Teléfono/Correo electrónico" required)
+                input.form-control(type="text" name="metodoPago" placeholder="Método de pago" required)
+                button.btn.btn-primary(ids="generarObjetoBtn" type="submit") Hacer pedido
+                button.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar          
+
+
+
 
 
     script.
