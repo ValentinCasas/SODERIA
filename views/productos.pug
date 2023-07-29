@@ -6,6 +6,7 @@ block content
         link(rel='stylesheet' href='/producto.css')
         link(rel='stylesheet' href='/nav.css')
         script(src="/producto.js" defer)
+        script(src="/jq-productos.js" defer)
 
 
     body
@@ -13,7 +14,7 @@ block content
 
 
         section#form.d-flex.justify-content-start.align-item-start
-            //formularo de registro
+ 
             form.form.col.col-xs-12.col-sm-12.col-md-6.col-lg-8(action="/productos/agregar" method="post" enctype="multipart/form-data")
                 p.form-title.mt-4 Crea un producto
 
@@ -116,30 +117,5 @@ block content
                             a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload      
 
 
-    //crear producto
-    script.
-        $(document).ready(function() {
-        $('form').submit(function(e) {
-            e.preventDefault(); // Evita el envío normal del formulario
-
-            var formData = new FormData(this);
-
-            $.ajax({
-            url: '/productos/agregar',
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                swal({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: 'Producto agregado correctamente',
-                timer: 3000,
-                timerProgressBar: true
-                });
-            }
-            });
-        });
-        });  
+    
 

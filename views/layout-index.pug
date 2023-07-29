@@ -26,7 +26,7 @@ html
     script(src="https://code.jquery.com/jquery-3.6.0.min.js")
     script(src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js")
 
-
+    //link(rel='stylesheet' href='/producto.css')
 
 
     script(src="/sweetAlert.js" defer)
@@ -77,18 +77,79 @@ html
               .modal-body
                 ul.cart
               .modal-footer
-                input.form-control(type="text" name="nombre" placeholder="Nombre del comprador" required)
-                input.form-control(type="text" name="contacto" placeholder="Teléfono/Correo electrónico" required)
-                input.form-control(type="text" name="metodoPago" placeholder="Método de pago" required)
-                button.btn.btn-primary(ids="generarObjetoBtn" type="submit") Hacer pedido
-                button.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar          
 
+                .col-12
 
+                  .row.input-container.mt-2
+                    .col-12
+                      .form-floating
+                        input.form-control#nombreInput(type="text" name="nombre" placeholder="Nombre completo" required)
+                        label(for="nombreInput") Nombre completo
+                  .row.input-container.mt-2
+                    .col-12
+                      .form-floating
+                        input.form-control#contactoInput(type="text" name="contacto" placeholder="Contacto" required)
+                        label(for="contactoInput") Contacto
+
+                  .row.input-container.mt-2
+                    .col-6
+                      .form-floating
+                        select.form-control#zonaInput(name=`zona`)
+                          each direccion in Direcciones
+                            option(value=`${direccion.id}`)= direccion.nombre
+                          option(value="otraZona") escribir otro
+                        label(for="zonaInput") Zona  
+                    .col-6
+                      .form-floating
+                        input.form-control#direccionInput(type="text" name="direccion" placeholder="Dirección" required)
+                        label#direccionLabel(for="direccionInput") dirección
+
+                  .row.input-container#otroInputContainer.mt-2(style='display: none;')
+                    .col-6
+                      .form-floating
+                        input.form-control(type='text' id='otroInput' name='otraZona' placeholder='Otra Zona')
+                        label(for='otroInput') Zona
+                    .col-6
+                      .form-floating
+                        input.form-control#otraDireccionInput(type="text" name="otraDireccion" placeholder="Otra dirección" required)
+                        label(for="otraDireccionInput") Dirección    
+
+                  .row.input-container.mt-2
+                    .col-12
+                      .form-floating
+                        input.form-control#metodoPago(type="text" name="metodoPago" placeholder="Método de pago" required)
+                        label(for="metodoPago") Método de pago
+                  .row.input-container.mt-3
+                    .col-6
+                      button.form-control.btn.btn-primary(ids="generarObjetoBtn" type="submit") Hacer pedido
+                    .col-6
+                      button.form-control.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar          
 
 
 
     script.
-      // Función para obtener los parámetros de la URL
+      const zonaInput = document.getElementById('zonaInput');
+        const otroInputContainer = document.getElementById('otroInputContainer');
+        const direccionInput = document.getElementById('direccionInput');
+        const direccionLabel = document.getElementById('direccionLabel');
+
+        zonaInput.addEventListener('change', () => {
+          const selectedOption = zonaInput.options[zonaInput.selectedIndex].value;
+          if (selectedOption === 'otraZona') {
+            otroInputContainer.style.display = 'flex';
+            direccionInput.style.display = 'none';
+            direccionLabel.style.display = 'none';
+          } else {
+            otroInputContainer.style.display = 'none';
+            direccionInput.style.display = 'flex';
+            direccionLabel.style.display = 'flex';
+          }
+        });
+
+
+
+    script.
+
       function getParameterByName(name) {
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -98,7 +159,6 @@ html
         return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
 
-      // Función para mostrar el SweetAlert en caso de error
       function showErrorAlert() {
         const error = getParameterByName("error");
         if (error) {
@@ -112,5 +172,4 @@ html
         }
       }
 
-      // Llama a la función para mostrar el SweetAlert al cargar la página
       showErrorAlert();

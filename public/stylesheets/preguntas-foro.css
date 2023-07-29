@@ -423,7 +423,7 @@ h1 {
   right: 2px;
   top: 0px;
   border: none;
-  z-index: 1000;
+  z-index: 1000000;
 }
 
 .btn-borrar::after {
@@ -444,11 +444,17 @@ h1 {
   font-size: 12px;
   opacity: 0;
   visibility: hidden;
+  z-index: 1000000;
 }
 
 .icon {
   transform: scale(1.2);
   transition: .2s linear;
+  z-index: 1000000;
+}
+
+#fill{
+  z-index: 1000000;
 }
 
 .btn-borrar:hover>.icon {

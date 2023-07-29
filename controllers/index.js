@@ -1,4 +1,4 @@
-const { Foro, Usuario, Producto, Retroalimentacion, Publicacion } = require("../models");
+const { Foro, Usuario, Producto, Retroalimentacion, Publicacion, Zona, Direccion } = require("../models");
 
 const fs = require('fs');
 
@@ -20,11 +20,14 @@ exports.viewIndex = async (req, res, next) => {
         return `${imagen}`;
     });
 
+    const direcciones = await Direccion.findAll();
+
     res.render('index', {
         Foro: foro,
         Productos: productos,
         Retroalimentaciones: retroalimentaciones,
-        ImagenesUrls: imagenesUrls
+        ImagenesUrls: imagenesUrls,
+        Direcciones: direcciones
     });
 }
 

@@ -1,0 +1,84 @@
+body {
+  overflow-x: hidden;
+}
+
+* {
+  /* border: 1px solid black; */
+}
+
+.contain-details {
+  padding: 40px;
+  margin-bottom: 20px;
+}
+
+
+
+/* Estilos para el elemento <details> */
+section.contain-details details {
+  background-color: #f0f0f0;
+  padding: 30px;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+
+/* Estilos para el resumen del <details> (el título) */
+section.contain-details summary {
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Estilos para el contenido adicional dentro del <details> */
+section.contain-details details div {
+  margin-top: 10px;
+}
+
+/* Estilos para las tablas dentro del <details> */
+section.contain-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+/* Estilos para las celdas de la tabla */
+section.contain-details td,
+section.contain-details th {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+/* Estilos para el botón de borrar en las tablas */
+section.contain-details input.btn-delete-zona,
+section.contain-details input.btn-delete-direccion {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Estilos para el botón de borrar al pasar el cursor sobre él */
+section.contain-details input.btn-delete-zona:hover,
+section.contain-details input.btn-delete-direccion:hover {
+  background-color: #cc0000;
+}
+
+
+
+
+.circuloData{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -60px;
+  right: -20px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;  
+}
+
+#cantidadZona, #cantidadDireccion, #cantidadZonaDireccion{
+  margin-top: 15px;
+  color: rgb(231, 231, 231);
+}

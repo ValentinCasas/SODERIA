@@ -37,6 +37,7 @@
     "pug": "^3.0.2",
     "sequelize": "^6.31.1",
     "sequelize-cli": "^6.6.0",
+    "sharp": "^0.32.4",
     "socket.io": "^4.6.1",
     "uuid": "^9.0.0"
   }

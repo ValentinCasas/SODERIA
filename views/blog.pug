@@ -5,6 +5,10 @@ block content
         title Blog
         link(rel='stylesheet' href='/blog.css')
         link(rel='stylesheet' href='/index.css')
+        link(rel='stylesheet' href='/preguntas-foro.css')
+
+        script(src="/jq-blog.js" defer) 
+
 
 
 
@@ -13,22 +17,27 @@ block content
         .col.col-lg-12.col-md-12.col-sm-12.col-12.p-3
             .row.d-flex.justify-content-center.p-2
                 each publicacion in Publicaciones
+
                     - const isVideo = publicacion.imagenUrl.endsWith('.mp4')
                     - const imageUrl = publicacion.imagenUrl === 'none' ? null : `/${publicacion.imagenUrl}`
-                    .blog-container.col-lg-5.col-md-5.col-sm-11.col-11.mx-3
+                    .blog-container.col-lg-5.col-md-5.col-sm-11.col-11.mx-3(id=`publicacion-${publicacion.id}`)
+
+                        if locals.role == "administrador"
+                            button.btn-borrar(type="button", data-url=`/blog/eliminar/${publicacion.id}`, onclick=`eliminarPublicacion(event,${publicacion.id})`)
+                                svg.icon(viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg")
+                                    path#Fill(transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z")
+
                         .blog-author.mt-4.d-flex.align-items-center
                             img(src=`/${publicacion.Usuario.imagenUrl}`)
                             h3= publicacion.Usuario.nombreCompleto
                         .blog-header
+
                             - if (isVideo)
                                 video.video-body(controls poster=imageUrl)
                                     source(src=imageUrl type='video/mp4')
                             - else if (imageUrl)
                                 .blog-cover
                                     img(src=imageUrl, class=`expandable-image expandable-image-${publicacion.id}`, alt="")
-
-
-
 
                         .blog-body
                             .blog-title
@@ -51,99 +60,24 @@ block content
                 img(src="" alt="")
             span.close-button ×
 
-
-
         #comment-modal.modal.fade
             .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
                 .modal-content
                     .modal-header
                         h5.modal-title Comentarios
+                        button.btn.btn-primary(type="button" data-dismiss="modal") Cerrar
                     .modal-body
                         ul#comment-list.p-0
                     .modal-footer
-                        button.btn.btn-secondary(type="button" data-dismiss="modal") Cerrar
-
-
-
-    script.
-        $(document).ready(function () {
-            // Cuando se hace clic en una imagen expandible
-            $(".expandable-image").on("click", function () {
-                const imageUrl = $(this).attr("src");
-                $("#expanded-image-container img").attr("src", imageUrl);
-                $("#expanded-image-container").fadeIn();
-            });
-
-            // Cuando se hace clic en el botón de cerrar
-            $("#expanded-image-container .close-button").on("click", function () {
-                $("#expanded-image-container").fadeOut();
-            });
+                        form(action=`/comentarios/crear` method="post").col.d-flex.justify-content-between 
+                            input.form.form-control.mx-1(type="text" placeholder="escribe un comentario" name="descripcion")  
+                            input(type="hidden" name="idPublicacion" id="idPublicacionInput")
+                            button.btn.btn-primary(type="submit") Enviar  
 
 
 
 
-                $(".view-comments").on("click", function () {
-                    const publicacionId = $(this).data("publicacion-id");
-
-                    // Realizar la solicitud AJAX para obtener los comentarios
-                    $.ajax({
-                        url: `/comentarios/view-comentarios/${publicacionId}`,
-                        type: "GET",
-                        success: function (data) {
-                            // Limpiar la lista de comentarios antes de mostrar los nuevos comentarios
-                            $("#comment-list").empty();
-
-                            // Agregar cada comentario a la lista
-                            data.comentarios.forEach(function (comentario) {
-                                const listItem = $("<li>").addClass("comment-item");
-
-                                // Imagen redonda del comentario
-                                const commentImage = $("<img>").attr("src","/"+data.imagenesUrls[Math.floor(Math.random() * data.imagenesUrls.length)] );
-                                listItem.append(commentImage);
-
-                                // Contenedor para la información del comentario
-                                const commentInfo = $("<div>").addClass("comment-info");
-
-                                // Descripción del comentario
-                                const commentDescription = $("<div>").addClass("comment-description").text(comentario.descripcion);
-                                commentInfo.append(commentDescription);
-
-                                // Fecha del comentario
-                                const commentDate = $("<div>").addClass("comment-date").text(comentario.fechaEnvio);
-                                commentInfo.append(commentDate);
-
-                                // Agregar el contenedor de información del comentario al listItem
-                                listItem.append(commentInfo);
-
-                                // Agregar el listItem a la lista de comentarios
-                                $("#comment-list").append(listItem);
-                            });
-
-                            // Mostrar el modal con los comentarios
-                            $("#comment-modal").modal("show");
-
-                                $("#comment-modal .modal-footer button").on("click", function () {
-                                    $("#comment-modal").modal("hide");
-                                    });
-
-
-                        },
-                        error: function () {
-                            // Mostrar un mensaje de error si no se pudieron obtener los comentarios
-                            $("#comment-list").empty().text("No hay comentarios disponibles por el momento");
-                            $("#comment-modal").modal("show");
-                        }
-                    });
-                        });
-                });
-
-
-
-
-
-
-
-
+    
 
 
 

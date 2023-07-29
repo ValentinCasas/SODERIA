@@ -1,0 +1,157 @@
+extends layout
+
+block content
+    head
+        title Zona
+        link(rel='stylesheet' href='/producto.css')
+        link(rel='stylesheet' href='/nav.css')
+        link(rel='stylesheet' href='/crear-zona.css')
+
+        script(src="/jq-crear-zona.js" defer) 
+
+
+    body
+
+
+
+        section#form.p-4.d-flex.justify-content-center 
+            .row
+                form.form.col.col-6#formZona(action="/zona/agregar" method="post")
+                    p.form-title.mt-4 Zona
+                    .row.input-container
+                        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                            .row.input-container
+                                .col-12
+                                    .form-floating
+                                        input.form-control#nombreInput(name="nombre" placeholder="nombre" type="text")
+                                        label(for="nombreInput") Nombre
+                    button.submit.mt-2(type="submit") AGREGAR
+
+
+                form.form.col.col-6#formDireccion(action="/direccion/agregar" method="post")
+                    p.form-title.mt-4 Dirección
+                    .row.input-container
+                        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                            .row.input-container
+                                .col-12
+                                    .form-floating
+                                        input.form-control#nombreInputDireccion(name="nombre" placeholder="nombre" type="text")
+                                        label(for="nombreInputDireccion") Nombre
+                    button.submit.mt-2(type="submit") AGREGAR
+
+
+                form.form.col.col-12#formEnlistar(action="/zona/enlistar" method="post")
+                    p.form-title.mt-4 Enlistar
+                    .row.input-container
+                        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+                            .row.input-container
+                                .col-6
+                                    .form-floating
+                                        select.form-control#enlistarZonaSelect(name=`zona`)
+                                            each zona in Zonas
+                                                option(value=`${zona.id}`)= zona.nombre
+                                        label(for="enlistarZonaSelect") Zona  
+                                .col-6
+                                    .form-floating
+                                        select.form-control#enlistarDireccionSelect(name=`direccion`)
+                                            each direccion in Direcciones
+                                                option(value=`${direccion.id}`)= direccion.nombre
+                                        label(for="enlistarDireccionSelect") dirección          
+                    button.submit.mt-2(type="submit") ENLISTAR    
+
+
+
+
+        section.contain-details
+            .row 
+                details#details-zona.col.col-12
+                    summary MOSTRAR ZONAS 
+                        if Zonas.length < 10 
+                            .circuloData.bg-success
+                                p#cantidadZona= Zonas.length 
+                        else if Zonas.length >= 10  
+                            .circuloData.bg-primary
+                                p#cantidadZona= Zonas.length      
+                    .col.col-12
+                        div( class="m-4 mx-auto col-lg-11 col-md-12 col-sm-12 col-xs-12 rounded shadow m-1 p-3 " id="containTable" )
+                            div(class="text-center")
+                                h3 ZONAS 
+                            table(class="table table-striped table-bordered nowrap hover m-1" style="width:100%" id="tablaZonas")
+                                thead
+                                    tr
+                                        th nombre
+                                        th editar
+                                        th borrar
+                                tbody#tbodyZonas    
+                                    each zona in Zonas
+                                        tr(data-zona-id=zona.id) 
+                                            td= zona.nombre
+
+                                            td
+                                                a(href=``)
+                                                    p.btn.btn-dark editar         
+                                            td
+                                                form(action=`/zona/eliminar/${zona.id}?_method=DELETE`, method="post")
+                                                    input.btn-delete-zona(type="submit" value="Borrar" class="btn btn-danger")
+
+                details#details-direccion.col.col-12
+                    summary MOSTRAR DIRECCIONES
+                        if Direcciones.length < 10 
+                            .circuloData.bg-success
+                                p#cantidadZona= Direcciones.length 
+                        else if Direcciones.length >= 10  
+                            .circuloData.bg-primary
+                                p#cantidadZona= Direcciones.length 
+                    .col.col-12
+                        div(class="m-4 mx-auto col-lg-11 col-md-12 col-sm-12 col-xs-12 rounded shadow m-1 p-3 " id="containTable" )
+                            div(class="text-center")
+                                h3 DIRECCIONES 
+                            table(class="table table-striped table-bordered nowrap hover m-1" style="width:100%" id="tablaDireccion")
+                                thead
+                                    tr
+                                        th nombre
+                                        th editar
+                                        th borrar
+                                tbody#tbodyDireccion  
+                                    each direccion in Direcciones
+                                        tr(data-direccion-id=direccion.id) 
+                                            td= direccion.nombre
+
+                                            td
+                                                a(href=``)
+                                                    p.btn.btn-dark editar         
+                                            td
+                                                form(action=`/direccion/eliminar/${direccion.id}?_method=DELETE`, method="post")
+                                                    input.btn-delete-direccion(type="submit" value="Borrar" class="btn btn-danger")
+
+                details#details-direccion.col.col-12
+                    summary MOSTRAR LISTAS 
+                        if ZonaDirecciones.length < 10 
+                            .circuloData.bg-success
+                                p#cantidadZona= ZonaDirecciones.length 
+                        else if ZonaDirecciones.length >= 10  
+                            .circuloData.bg-primary
+                                p#cantidadZona= ZonaDirecciones.length 
+                    .col.col-12
+                        div(class="m-4 mx-auto col-lg-11 col-md-12 col-sm-12 col-xs-12 rounded shadow m-1 p-3 " id="containTable" )
+                            div(class="text-center")
+                                h3 LISTAS 
+                            table(class="table table-striped table-bordered nowrap hover m-1" style="width:100%" id="tablaZonaDireccion")
+                                thead
+                                    tr
+                                        th zona
+                                        th direccion
+                                        th editar
+                                        th borrar
+                                tbody#tbodyZonaDireccion 
+                                    each zonaDireccion in ZonaDirecciones
+                                        tr(data-zonaDireccion-id = zonaDireccion.id) 
+
+                                            td= zonaDireccion.Zona.nombre
+                                            td= zonaDireccion.Direccion.nombre
+                                            td
+                                                a(href=``)
+                                                    p.btn.btn-dark editar         
+                                            td
+                                                form(action=`/zona/eliminar-zonaDireccion/${zonaDireccion.id}?_method=DELETE`, method="post")
+                                                    input.btn-delete-zonaDireccion(type="submit" value="Borrar" class="btn btn-danger")

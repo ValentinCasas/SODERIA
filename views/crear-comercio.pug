@@ -12,6 +12,8 @@ block content
         script(src="/producto.js" defer)
         script(src="/map.js" defer)
 
+        script(src="/jq-crear-comercios.js" defer)
+
     body  
 
 
@@ -115,32 +117,4 @@ block content
                         details
                             summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
                             a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload      
-
-
-        //crear producto
-        script.
-            $(document).ready(function() {
-            $('form').submit(function(e) {
-                e.preventDefault(); // Evita el envío normal del formulario
-
-                var formData = new FormData(this);
-
-                $.ajax({
-                url: '/comercio/agregar',
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    swal({
-                    icon: 'success',
-                    title: '¡Éxito!',
-                    text: 'Comercio agregado correctamente',
-                    timer: 3000,
-                    timerProgressBar: true
-                    });
-                }
-                });
-            });
-            });  
 

@@ -25,6 +25,8 @@ const comercioRouter = require('./routes/comercio');
 const retroalimentacionRouter = require('./routes/retroalimentacion');
 const blogRouter = require('./routes/blog');
 const comentariosRouter = require('./routes/comentario');
+const zonaRouter = require('./routes/zona');
+const direccionRouter = require('./routes/direccion');
 
 
 var app = express();
@@ -40,10 +42,12 @@ app.use(
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'fonts')));
 app.use(express.static(path.join(__dirname, 'public/stylesheets')));
+app.use(express.static(path.join(__dirname, 'public/jQuery')));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
 app.use(express.static(path.join(__dirname, 'public/images')));
 app.use(express.static(path.join(__dirname, 'public/imagen-producto')));
@@ -56,8 +60,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
-app.use(upload({ limits: { fileSize: 1024 * 1024 } }));
+app.use(upload({ limits: { fileSize: 10 * 1024 * 1024 } }));
 app.use(cookieParser());
+
+
 
 // Middleware para verificar el token en cada solicitud
 app.use(function (req, res, next) {
@@ -92,6 +98,8 @@ app.use('/comercio', isAutenticatedBD, comercioRouter);
 app.use('/retroalimentacion', retroalimentacionRouter);
 app.use('/blog', blogRouter);
 app.use('/comentarios', comentariosRouter);
+app.use('/zona', zonaRouter);
+app.use('/direccion', direccionRouter);
 
 
 
