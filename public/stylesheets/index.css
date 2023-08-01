@@ -42,24 +42,27 @@ body {
 .pregunta {
   background-color: rgb(255, 255, 255);
   border: 1px solid #86a7f062;
-  word-wrap: break-word; /* Permite que las palabras se dividan en varias líneas si es necesario */
- 
+  word-wrap: break-word;
   padding: 32px;
   margin-bottom: 5px;
   font-size: 20px;
   line-height: 32px;
   border-radius: 5px;
-
 }
 
 .pregunta>details>summary {
   font-size: 22px;
+  cursor: pointer;
   color: #042c4e;
+  transition: margin 300ms ease-out;
 }
 
 .respuesta {
   padding: 15px;
+}
 
+details[open] summary {
+  margin-bottom: 10px;
 }
 
 .contain-preguntas {
