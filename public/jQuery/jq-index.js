@@ -6,6 +6,8 @@ $(".testimonial-reel").slick({
     infinite: true,
     arrows: false,
     lazyLoad: "ondemand",
+    autoplay: true, // Agregar autoplay para el desplazamiento automático
+    autoplaySpeed: 2000, // Configurar la velocidad de desplazamiento (en milisegundos)
     responsive: [
         {
             breakpoint: 1024,
@@ -22,6 +24,7 @@ $(".testimonial-reel").slick({
         }
     ]
 });
+
 
 
 

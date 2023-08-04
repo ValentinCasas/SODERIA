@@ -67,15 +67,13 @@ app.use(cookieParser());
 
 // Middleware para verificar el token en cada solicitud
 app.use(function (req, res, next) {
-  // Verificar token en cada solicitud (excepto en las rutas de autenticación)
   if (!req.path.startsWith("/auth")) {
     const token = req.cookies.token;
     if (token) {
       try {
         const decoded = jwt.verify(token, secretKey);
-        req.user = decoded; // Añadimos el usuario al objeto req para que esté disponible en otras partes del código
+        req.user = decoded; 
       } catch (err) {
-        // Si el token es inválido, puedes manejarlo aquí (por ejemplo, redirigir a la página de inicio de sesión)
         console.error("Token inválido:", err);
       }
     }

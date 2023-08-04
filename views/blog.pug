@@ -3,10 +3,12 @@ extends layout-index
 block content
     head
         title Blog
-        link(rel='stylesheet' href='/blog.css')
         link(rel='stylesheet' href='/index.css')
         link(rel='stylesheet' href='/preguntas-foro.css')
+        link(rel='stylesheet' href='/loader.css')
 
+        link(rel='stylesheet' href='/blog.css')
+        script(src="/loader.js" defer) 
         script(src="/jq-blog.js" defer) 
 
 
@@ -14,8 +16,17 @@ block content
 
     body
 
-        .col.col-lg-12.col-md-12.col-sm-12.col-12.p-3
+        div#loader
+            div(class="loadingspinner")
+                div(id="square1")
+                div(id="square2")
+                div(id="square3")
+                div(id="square4")
+                div(id="square5")
+
+        .blog.col.col-lg-12.col-md-12.col-sm-12.col-12.p-3
             .row.d-flex.justify-content-center.p-2
+
                 each publicacion in Publicaciones
 
                     - const isVideo = publicacion.imagenUrl.endsWith('.mp4')
@@ -54,6 +65,17 @@ block content
                                         i.ion-ios-chatbubble
                                         span.numero #{Comentarios.filter(comentario => comentario.idPublicacion === publicacion.id).length}
 
+            ul.pagination.pagination-lg
+                - for (let i = 1; i <= totalPages; i++)
+                    if currentPage === i
+                        li.page-item
+                            a.page-link(href=`/blog/view-blog?page=${i}`, class="bg-info")= i
+                    else
+                        li.page-item
+                            a.page-link(href=`/blog/view-blog?page=${i}`, class="bg-secondary")= i
+
+
+
 
         #expanded-image-container
             .expanded-image
@@ -70,14 +92,14 @@ block content
                         ul#comment-list.p-0
                     .modal-footer
                         form(action=`/comentarios/crear` method="post").col.d-flex.justify-content-between 
-                            input.form.form-control.mx-1(type="text" placeholder="escribe un comentario" name="descripcion")  
                             input(type="hidden" name="idPublicacion" id="idPublicacionInput")
-                            button.btn.btn-primary(type="submit") Enviar  
+
+                            div.input-group.col.col-12
+                                input.input.col.col-9(type="text" placeholder="escribe un comentario" name="descripcion")
+                                input.button--submit.col.col-3(type="submit" value="Enviar")
 
 
 
-
-    
 
 
 

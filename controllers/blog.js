@@ -55,13 +55,37 @@ exports.agregarPublicacion = async (req, res, next) => {
     }
 };
 
-exports.viewBlog = async (req, res, next) => {
-    const publicaciones = await Publicacion.findAll({ include: Usuario });
-    const comentarios = await Comentario.findAll({ include: Publicacion });
-    const direcciones = await Direccion.findAll();
+const PAGE_SIZE = 5; // Número de publicaciones por página
 
-    res.render('blog', { Publicaciones: publicaciones, Comentarios: comentarios, res: res, Direcciones: direcciones });
-}
+exports.viewBlog = async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1; // Página actual (por defecto, la primera)
+  const offset = (page - 1) * PAGE_SIZE; // Desplazamiento para la consulta
+
+  // Consultar la cantidad total de publicaciones
+  const count = await Publicacion.count();
+
+  const publicaciones = await Publicacion.findAll({
+    include: Usuario,
+    limit: PAGE_SIZE,
+    offset: offset,
+    order: [['fechaSubida', 'DESC']], // Ordenar por la columna correcta (fechaSubida en este caso)
+  });
+
+  const totalPages = Math.ceil(count / PAGE_SIZE);
+
+  const comentarios = await Comentario.findAll({ include: Publicacion });
+  const direcciones = await Direccion.findAll();
+
+  res.render('blog', {
+    Publicaciones: publicaciones,
+    Comentarios: comentarios,
+    totalPages: totalPages,
+    res: res,
+    Direcciones: direcciones,
+    currentPage: page,
+  });
+};
+
 
 exports.eliminarPublicacion = async (req, res, next) => {
     try {

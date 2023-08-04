@@ -51,7 +51,7 @@ exports.login = async (req, res, next) => {
       mail: user.mail,
     };
 
-    const token = jwt.sign(tokenPayload, secretKey, { expiresIn: "2h" }); // El token expirará después de 1 hora
+    const token = jwt.sign(tokenPayload, secretKey, { expiresIn: "4h" }); // El token expirará después de 1 hora
 
     req.session.isLoggedIn = true;
     req.session.role = Rol[user.rol];

@@ -70,11 +70,11 @@ details[open] summary {
   overflow-y: scroll;
 }
 
-.input-foro{
+.input-foro {
   height: 60px;
 }
 
-.btn-foro{
+.btn-foro {
   width: 100px;
   margin-left: 5px;
 }
@@ -311,9 +311,9 @@ main>div>a:hover {
   border: none;
   background: none;
   text-decoration: none;
- }
- 
- .cta:before {
+}
+
+.cta:before {
   content: "";
   position: absolute;
   top: 0;
@@ -324,18 +324,18 @@ main>div>a:hover {
   width: 45px;
   height: 45px;
   transition: all 0.3s ease;
- }
- 
- .cta span {
+}
+
+.cta span {
   position: relative;
   font-family: "Ubuntu", sans-serif;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #234567;
- }
- 
- .cta svg {
+}
+
+.cta svg {
   position: relative;
   top: 0;
   margin-left: 10px;
@@ -346,24 +346,47 @@ main>div>a:hover {
   stroke-width: 2;
   transform: translateX(-5px);
   transition: all 0.3s ease;
- }
- 
- .cta:hover:before {
+}
+
+.cta:hover:before {
   width: 100%;
   background: #b1dae7;
- }
- 
- .cta:hover svg {
+}
+
+.cta:hover svg {
   transform: translateX(0);
- }
- 
- .cta:active {
+}
+
+.cta:active {
   transform: scale(0.95);
- }
+}
 
 
+.navbar-toggler {
+  position: relative;
+}
 
-
-
-
-
+#totalItems_nav {
+  position: absolute;
+  top: -5px;
+  right: -7px;
+  padding: 1px;
+  background-color: #479feb;
+  border: .1px solid #ffff;
+  min-height: 18px;
+  min-width: 18px;
+  line-height: 18px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 50%;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: -webkit-transform 0.2s 0s;
+  -moz-transition: -moz-transform 0.2s 0s;
+  transition: transform 0.2s 0s;
+}

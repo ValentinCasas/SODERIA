@@ -67,6 +67,7 @@ botonesAgregar.forEach((boton) => {
 
 function actualizarCarrito() {
     const totalItemsElement = document.getElementById('totalItems');
+    const totalItemsNavElement = document.getElementById('totalItems_nav');
     const cartListElement = document.querySelector('.cart');
 
     // Limpiar contenido anterior del carrito
@@ -86,15 +87,19 @@ function actualizarCarrito() {
 
         const listItem = document.createElement('span');
         listItem.textContent = producto.nombre;
+        listItem.classList.add('producto-nombre');
 
         const listItemDescripcion = document.createElement('p');
         listItemDescripcion.textContent = producto.descripcion;
+        listItemDescripcion.classList.add('producto-descripcion');
 
         const listItemPrecio = document.createElement('p');
         listItemPrecio.textContent = `Precio: $${producto.precio.toFixed(2)}`;
+        listItemPrecio.classList.add('producto-precio');
 
         const listItemCantidad = document.createElement('p');
         listItemCantidad.textContent = `Cantidad: ${producto.cantidad}`;
+        listItemCantidad.classList.add('producto-cantidad');
 
         itemInfoDiv.appendChild(listItem);
         itemInfoDiv.appendChild(listItemDescripcion);
@@ -123,6 +128,7 @@ function actualizarCarrito() {
     // Actualizar la cantidad de productos en el carrito en el modal
     const cantidadProductos = carrito.reduce((total, producto) => total + producto.cantidad, 0);
     totalItemsElement.textContent = cantidadProductos;
+    totalItemsNavElement.textContent = cantidadProductos;
 
     calcularSumaTotal();
 }

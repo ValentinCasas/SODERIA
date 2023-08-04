@@ -34,13 +34,18 @@ html
     link(rel='stylesheet' href='/nav.css')
 
 
+
   body
     block content
+
+    
 
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       .container-fluid
         button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation")
           span.navbar-toggler-icon
+          span#totalItems_nav 0 
+
         .contain-btn-empleado
           a(href="/auth/view/login").cta
             span Soy empleado
@@ -49,82 +54,83 @@ html
               polyline(points="8 1 12 5 8 9")
 
         #navbar.collapse.navbar-collapse
+
           ul.navbar-nav.ms-auto.p-2
+
 
             li.nav-item.mx-3
               a.nav-link(href="/") INICIO
 
             li.nav-item.mx-3
-              a.nav-link(href="blog/view-blog") BLOG
+              a.nav-link(href="/blog/view-blog") BLOG
 
 
             if locals.isLoggedIn 
               li.nav-item.mx-3
                 a.nav-link(href="/home") Home
 
-
-
             a.cart-icon(data-toggle="modal" data-target="#carritoModal" ).mx-3
-              span#totalItems 0
+              span#totalItems 0      
 
 
-        div.modal#carritoModal.p-2
-          form.modal-dialog(action="/comprar" method="POST")
-            .modal-content
-              .modal-header
-                h5.modal-title Mi carrito
-                span.total-suma
-              .modal-body
-                ul.cart
-              .modal-footer
 
+
+    div.modal#carritoModal.p-2
+      form.modal-dialog(action="/comprar" method="POST")
+        .modal-content
+          .modal-header
+            h5.modal-title Mi carrito
+            span.total-suma
+          .modal-footer
+            .col-12
+
+              .row.input-container.mt-2
                 .col-12
+                  .form-floating
+                    input.form-control#nombreInput(type="text" name="nombre" placeholder="Nombre completo" required)
+                    label(for="nombreInput") Nombre completo
+              .row.input-container.mt-2
+                .col-12
+                  .form-floating
+                    input.form-control#contactoInput(type="text" name="contacto" placeholder="Contacto" required)
+                    label(for="contactoInput") Contacto
 
-                  .row.input-container.mt-2
-                    .col-12
-                      .form-floating
-                        input.form-control#nombreInput(type="text" name="nombre" placeholder="Nombre completo" required)
-                        label(for="nombreInput") Nombre completo
-                  .row.input-container.mt-2
-                    .col-12
-                      .form-floating
-                        input.form-control#contactoInput(type="text" name="contacto" placeholder="Contacto" required)
-                        label(for="contactoInput") Contacto
+              .row.input-container.mt-2
+                .col-6
+                  .form-floating
+                    select.form-control#zonaInput(name=`zona`)
+                      each direccion in Direcciones
+                        option(value=`${direccion.id}`)= direccion.nombre
+                      option(value="otraZona") escribir otro
+                    label(for="zonaInput") Zona  
+                .col-6
+                  .form-floating
+                    input.form-control#direccionInput(type="text" name="direccion" placeholder="Dirección" required)
+                    label#direccionLabel(for="direccionInput") dirección
 
-                  .row.input-container.mt-2
-                    .col-6
-                      .form-floating
-                        select.form-control#zonaInput(name=`zona`)
-                          each direccion in Direcciones
-                            option(value=`${direccion.id}`)= direccion.nombre
-                          option(value="otraZona") escribir otro
-                        label(for="zonaInput") Zona  
-                    .col-6
-                      .form-floating
-                        input.form-control#direccionInput(type="text" name="direccion" placeholder="Dirección" required)
-                        label#direccionLabel(for="direccionInput") dirección
+              .row.input-container#otroInputContainer.mt-2(style='display: none;')
+                .col-6
+                  .form-floating
+                    input.form-control(type='text' id='otroInput' name='otraZona' placeholder='Otra Zona')
+                    label(for='otroInput') Zona
+                .col-6
+                  .form-floating
+                    input.form-control#otraDireccionInput(type="text" name="otraDireccion" placeholder="Otra dirección" required)
+                    label(for="otraDireccionInput") Dirección    
 
-                  .row.input-container#otroInputContainer.mt-2(style='display: none;')
-                    .col-6
-                      .form-floating
-                        input.form-control(type='text' id='otroInput' name='otraZona' placeholder='Otra Zona')
-                        label(for='otroInput') Zona
-                    .col-6
-                      .form-floating
-                        input.form-control#otraDireccionInput(type="text" name="otraDireccion" placeholder="Otra dirección" required)
-                        label(for="otraDireccionInput") Dirección    
+              .row.input-container.mt-2
+                .col-12
+                  .form-floating
+                    input.form-control#metodoPago(type="text" name="metodoPago" placeholder="Método de pago" required)
+                    label(for="metodoPago") Método de pago
 
-                  .row.input-container.mt-2
-                    .col-12
-                      .form-floating
-                        input.form-control#metodoPago(type="text" name="metodoPago" placeholder="Método de pago" required)
-                        label(for="metodoPago") Método de pago
-                  .row.input-container.mt-3
-                    .col-6
-                      button.form-control.btn.btn-primary(ids="generarObjetoBtn" type="submit") Hacer pedido
-                    .col-6
-                      button.form-control.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar          
+              .contain-btns-carrito.d-flex
 
+                button.form-control.btn.btn-primary.hacer-pedido-btn(ids="generarObjetoBtn" type="submit") Hacer pedido
+
+                button.form-control.btn.btn-secondary.cerrar(type="button" data-dismiss="modal") Cerrar          
+          .modal-body
+            ul.cart
 
 
     script.

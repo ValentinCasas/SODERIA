@@ -21,7 +21,7 @@ block content
 
 
 
-  
+
     section#form.d-flex.justify-content-start.align-item-start
       //formularo de registro
       form.form.col.col-xs-12.col-sm-12.col-md-6.col-lg-8(action="/usuario/agregar" method="post" enctype="multipart/form-data")
@@ -75,7 +75,7 @@ block content
                   select.form-control#idComercioInput(name="idComercio")
                     for comercio in Comercios
                       option(value=`${comercio.id}`) #{comercio.nombre + " - " + comercio.direccion}
-                  
+
 
 
         .container.col.col-lg-4.col-md-4.col-sm-6.col-xs-12.mt-3
@@ -108,46 +108,29 @@ block content
 
 
       .recomendaciones.col.col-lg-4.col-md-6.d-none.d-md-block
-        .titulo.mt-4.mb-3.d-flex.justify-content-center
 
         .container.contain-preguntas
           .pregunta
             details
-              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
-              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
+              summary(class="bg-white p-3 rounded") Clave
+              p(class="respuesta") La clave debe tener un mínimo de 8 caracteres y contener al menos un número para aumentar la seguridad.
+
+            details
+              summary(class="bg-white p-3 rounded") Correo de contacto
+              p(class="respuesta") Proporciona un correo de contacto válido para que podamos comunicarnos contigo en caso necesario.
+
+            details
+              summary(class="bg-white p-3 rounded") Rol
+              p(class="respuesta") Selecciona el rol adecuado para tu cuenta: "Administrador" si necesitas acceso completo al sistema o "Empleado" si tendrás funciones específicas asignadas.
+
+            details
+              summary(class="bg-white p-3 rounded") Comercio
+              p(class="respuesta") Elige el comercio al que estás asociado. Esto determinará los productos y permisos que estarán disponibles para tu cuenta.
+
+            details
+              summary(class="bg-white p-3 rounded") Imagen
+              p(class="respuesta") Sube una imagen para tu perfil. Puedes usar la imagen proporcionada por el comercio o una imagen personalizada con fondo transparente en formato PNG para una apariencia más profesional.
 
             details
               summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
               a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload        
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
-              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
-              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload     
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
-              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
-              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload      
-            details
-              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
-              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
-              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload    
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Como debe ser la imagen?
-              p(class="respuesta") Al subir una imagen se  pide que sea en formato PNG, para no alterar el flujo de la pagina
-
-            details
-              summary(class="bg-white p-3 rounded") ¿Donde puedo crear una imagen PNG?
-              a(class="respuesta" href="https://www.remove.bg/es/upload" target="_blank") https://www.remove.bg/es/upload      
-

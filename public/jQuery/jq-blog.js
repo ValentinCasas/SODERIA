@@ -91,8 +91,15 @@ $(document).ready(function () {
                     commentInfo.append(commentDate);
 
                     if (data.isAdmin) {
-                        const deleteLink = $("<a>").attr("href", `/comentarios/eliminar/${comentario.id}`).attr("data-method", "get").addClass("delete-comment").text("Eliminar");
-                        commentInfo.append(deleteLink);
+                        const deleteLink = $("<a>")
+                            .attr("href", `/comentarios/eliminar/${comentario.id}`)
+                            .attr("data-method", "get")
+                            .addClass("delete-comment");
+
+                        const iconElement = $("<i>").addClass("ion-close-round"); // Clase para el ícono de X de Ionicons
+                        deleteLink.append(iconElement); // Agregamos el ícono al enlace
+
+                        commentInfo.append(deleteLink); // Agregamos el enlace al elemento con la clase "commentInfo"
                     }
                     listItem.append(commentInfo);
                     $("#comment-list").append(listItem);
@@ -168,7 +175,7 @@ $(document).ready(function () {
     });
 
 
-   
+
 
     // Agregar el evento de clic al botón de cerrar para cerrar el modal
     $("#comment-modal .modal-header button").on("click", function () {
